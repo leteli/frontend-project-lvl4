@@ -26,6 +26,15 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
+export const getAuthHeader = () => {
+  const userId = JSON.parse(localStorage.getItem('userId'));
+  console.log(userId.token);
+  if (userId && userId.token) {
+    return { Authorization: `Bearer ${userId.token}` };
+  }
+  return {};
+};
+
 const useAuth = () => useContext(authContext);
 
 export default useAuth;
