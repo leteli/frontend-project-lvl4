@@ -9,6 +9,7 @@ import {
 import { AuthProvider } from '../contexts/auth.jsx';
 import LoginForm from './LoginForm.jsx';
 import NoMatch from './NoMatch.jsx';
+import Chat from './Chat.jsx';
 
 const App = () => (
   <AuthProvider>
@@ -18,7 +19,7 @@ const App = () => (
           <LoginForm />
         </Route>
         <Route path="/">
-          { localStorage.getItem('userId') ? null : <Redirect to="/login" /> }
+          { localStorage.getItem('userId') ? <Chat /> : <Redirect to="/login" /> }
         </Route>
         <Route path="*">
           <NoMatch />
