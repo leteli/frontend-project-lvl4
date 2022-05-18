@@ -11,7 +11,7 @@ import { Provider } from 'react-redux';
 import App from './components/App.jsx';
 import store from './slices/index.js';
 
-if (process.env.NODE_ENV !== 'production') { // зачем?
+if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
