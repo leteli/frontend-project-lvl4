@@ -5,7 +5,7 @@ import { getAuthHeader } from '../contexts/auth.jsx';
 import routes from '../routes.js';
 
 const fetchData = createAsyncThunk(
-  'messages/fetchData',
+  'fetchData',
   async () => {
     const { data } = await axios.get(routes.dataPath(), {
       headers: getAuthHeader(),
