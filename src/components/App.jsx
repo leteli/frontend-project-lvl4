@@ -1,32 +1,37 @@
+/* eslint-disable no-confusing-arrow */
 import React from 'react';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect,
 } from 'react-router-dom';
 
 import { AuthProvider } from '../contexts/auth.jsx';
+import ChatNavbar from './ChatNavbar.jsx';
 import LoginForm from './LoginForm.jsx';
 import NoMatch from './NoMatch.jsx';
 import Chat from './Chat.jsx';
+import PrivateRoute from './PrivateRoute.jsx';
 
 const App = () => (
   <AuthProvider>
     <Router>
-      <Switch>
-        <Route path="/login">
-          <LoginForm />
-        </Route>
-        <Route path="/">
-          { localStorage.getItem('userId') ? <Chat /> : <Redirect to="/login" /> }
-        </Route>
-        <Route path="*">
-          <NoMatch />
-        </Route>
-      </Switch>
+      <div className="d-flex flex-column h-100">
+        <ChatNavbar />
+        <Switch>
+          <Route path="/login">
+            <LoginForm />
+          </Route>
+          <PrivateRoute>
+            <Chat />
+          </PrivateRoute>
+          <Route path="*">
+            <NoMatch />
+          </Route>
+        </Switch>
+      </div>
     </Router>
   </AuthProvider>
-); // нужен ли exact path у '/' ?
+);
 
 export default App;
