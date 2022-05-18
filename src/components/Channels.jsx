@@ -1,17 +1,21 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Col,
   Button,
   Nav,
 } from 'react-bootstrap';
 
-import { selectors } from '../slices/channelsSlice.js';
+import { selectors, actions } from '../slices/channelsSlice.js';
 
 const Channels = () => {
   const channels = useSelector(selectors.selectAll);
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   console.log(channels);
+
+  const dispatch = useDispatch();
+
+  const handleChannelClick = (id) => () => dispatch(actions.setCurrentChannel(id));
 
   return currentChannelId && (
     <Col xs={4} md={2} className="pt-5 px-0 border-end bg-light">
@@ -28,6 +32,7 @@ const Channels = () => {
         {channels.map((channel) => (
           <Nav.Item key={channel.id} className="w-100">
             <Button
+              onClick={handleChannelClick(channel.id)}
               className="text-start w-100 rounded-0"
               variant={channel.id === currentChannelId ? 'secondary' : ''}
             >
