@@ -1,6 +1,7 @@
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 import { io } from 'socket.io-client';
-import fetchData from './fetchData.js';
+
+import { actions as channelsActions } from './channelsSlice.js';
 
 const messagesAdapter = createEntityAdapter();
 const initialState = messagesAdapter.getInitialState();
@@ -10,14 +11,15 @@ const messagesSlice = createSlice({
   initialState,
   reducers: {
     addMessage: messagesAdapter.addOne,
+    addMessages: messagesAdapter.addMany,
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchData.fulfilled, (state, action) => {
-        messagesAdapter.setAll(state, action.payload.messages);
-      })
-      .addCase(fetchData.rejected, (state, action) => {
-        console.log(action.error);
+      .addCase(channelsActions.removeChannel, (state, action) => {
+        const channelId = action.payload;
+        const restMessages = Object.values(state.entities)
+          .filter((c) => c.channelId !== channelId);
+        messagesAdapter.setAll(state, restMessages);
       });
   },
 });
@@ -26,13 +28,11 @@ export const sendNewMessage = (newMessage) => async (dispatch) => {
   const socket = io();
   try {
     await socket.emit('newMessage', newMessage, (response) => {
-      console.log(response.status);
       if (response.status !== 'ok') {
         throw new Error('Network error: message delivery failed');
       }
     });
     await socket.on('newMessage', (response) => {
-      console.log(response);
       dispatch(messagesSlice.actions.addMessage(response));
     });
   } catch (err) {
@@ -41,5 +41,7 @@ export const sendNewMessage = (newMessage) => async (dispatch) => {
 };
 
 export const selectors = messagesAdapter.getSelectors((state) => state.messages);
+
+export const { actions } = messagesSlice;
 
 export default messagesSlice.reducer;
