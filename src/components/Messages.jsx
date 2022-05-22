@@ -10,25 +10,26 @@ import MessageForm from './MessageForm.jsx';
 const Messages = () => {
   const messages = useSelector(messagesSelectors.selectAll);
   console.log(messages);
-  const currentChannel = useSelector((state) => {
-    const { currentChannelId } = state.channels;
-    return channelsSelectors.selectById(state, currentChannelId);
-  });
+  const { currentChannelId } = useSelector((state) => state.channels);
+  const currentChannel = useSelector((state) => channelsSelectors
+    .selectById(state, currentChannelId));
+  const currentMessages = messages.filter((message) => message.channelId === currentChannelId);
 
   return currentChannel && (
     <Col className="p-0 h-100">
       <div className="d-flex flex-column h-100">
         <div className="bg-light mb-4 p-3 shadow-sm small">
           <p className="m-0">
+            <b># </b>
             <b>{currentChannel.name}</b>
           </p>
           <span className="text-muted">
-            {messages.length}
+            {currentMessages.length}
             сообщений
           </span>
         </div>
         <div id="messages-box" className="chat-messages overflow-auto px-5">
-          {messages.length > 0 && messages.map((message) => (
+          {currentMessages.map((message) => (
             <div key={message.id} className="text-break mb-2">
               <b>{message.username}</b>
               <span> : </span>
