@@ -73,33 +73,35 @@ const LoginForm = () => {
                   }
                 }}
               >
-                <Form className="col-12 col-md-6 mt-3 mt-mb-0">
-                  <h1 className="text-center mb-4">Войти</h1>
-                  <div className="form-floating mb-3">
-                    <TextInput
-                      className={cn('form-control', {
-                        'is-invalid': authFailed,
-                      })}
-                      label="Ваш ник"
-                      name="username"
-                      type="text"
-                      placeholder="Ваш ник"
-                    />
-                  </div>
-                  <div className="form-floating mb-4">
-                    <TextInput
-                      className={cn('form-control', {
-                        'is-invalid': authFailed,
-                      })}
-                      label="Пароль"
-                      name="password"
-                      type="text"
-                      placeholder="Пароль"
-                    />
-                    <div className="invalid-feedback">Неверное имя пользователя или пароль</div>
-                  </div>
-                  <Button variant="outline-primary" className="w-100" type="submit">Войти</Button>
-                </Form>
+                {(props) => (
+                  <Form className="col-12 col-md-6 mt-3 mt-mb-0">
+                    <h1 className="text-center mb-4">Войти</h1>
+                    <div className="form-floating mb-3">
+                      <TextInput
+                        className={cn('form-control', {
+                          'is-invalid': authFailed,
+                        })}
+                        label="Ваш ник"
+                        name="username"
+                        type="text"
+                        placeholder="Ваш ник"
+                      />
+                    </div>
+                    <div className="form-floating mb-4">
+                      <TextInput
+                        className={cn('form-control', {
+                          'is-invalid': authFailed,
+                        })}
+                        label="Пароль"
+                        name="password"
+                        type="text"
+                        placeholder="Пароль"
+                      />
+                      <div className="invalid-feedback">Неверное имя пользователя или пароль</div>
+                    </div>
+                    <Button disabled={props.isSubmitting} variant="outline-primary" className="w-100" type="submit">Войти</Button>
+                  </Form>
+                )}
               </Formik>
             </Card.Body>
             <Card.Footer className="p-4">
