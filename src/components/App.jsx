@@ -9,6 +9,7 @@ import {
 import { AuthProvider } from '../contexts/auth.jsx';
 import ChatNavbar from './ChatNavbar.jsx';
 import LoginForm from './LoginForm.jsx';
+import SignupForm from './SignupForm.jsx';
 import NoMatch from './NoMatch.jsx';
 import Chat from './Chat.jsx';
 import PrivateRoute from './PrivateRoute.jsx';
@@ -21,6 +22,9 @@ const App = () => (
         <Switch>
           <Route path="/login">
             <LoginForm />
+          </Route>
+          <Route path="/signup">
+            <SignupForm />
           </Route>
           <PrivateRoute>
             <Chat />
