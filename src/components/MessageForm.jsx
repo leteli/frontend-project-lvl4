@@ -11,7 +11,7 @@ import { sendNewMessage } from '../slices/messagesSlice.js';
 
 const MessageForm = () => {
   const inputRef = useRef();
-  useEffect(() => inputRef.current.focus());
+  useEffect(() => inputRef.current.focus()); // при первой загрузке?
   const dispatch = useDispatch();
   const channelId = useSelector((state) => state.channels.currentChannelId);
   return (
