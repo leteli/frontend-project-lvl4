@@ -1,19 +1,20 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { Button } from 'react-bootstrap';
 
 import { Formik } from 'formik';
-
-import { sendNewMessage } from '../slices/messagesSlice.js';
+import useSocket from '../contexts/sockets.js';
 
 const MessageForm = () => {
+  const socketApi = useSocket();
   const inputRef = useRef();
-  useEffect(() => inputRef.current.focus()); // при первой загрузке?
-  const dispatch = useDispatch();
+  useEffect(() => inputRef.current.focus());
+
   const channelId = useSelector((state) => state.channels.currentChannelId);
+
   return (
     <div className="mt-auto px-5 py-3">
       <Formik
@@ -23,7 +24,7 @@ const MessageForm = () => {
         onSubmit={(values, actions) => {
           const { username } = JSON.parse(localStorage.getItem('userId'));
           const message = { ...values, channelId, username };
-          dispatch(sendNewMessage(message));
+          socketApi.sendNewMessage(message);
           values.body = '';
           actions.setSubmitting(false);
         }}

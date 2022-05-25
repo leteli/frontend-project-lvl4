@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import {
   Modal,
   Button,
@@ -8,11 +9,14 @@ import {
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-import { selectors, addNewChannel, renameChannel } from '../slices/channelsSlice.js';
+import { selectors } from '../slices/channelsSlice.js';
 import { actions as modalsActions } from '../slices/modalsSlice.js';
+import useSocket from '../contexts/sockets.js';
 
 const ChannelForm = () => {
+  const socketApi = useSocket();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const inputRef = useRef();
   useEffect(() => inputRef.current.focus(), []);
 
@@ -24,11 +28,11 @@ const ChannelForm = () => {
   const { type, channel } = useSelector((state) => state.modals);
 
   const onAdd = (name) => {
-    dispatch(addNewChannel({ removable: true, name }));
+    socketApi.addNewChannel({ removable: true, name });
   };
-  const onRename = (name) => dispatch(renameChannel({ id: channel.id, name }));
+  const onRename = (name) => socketApi.renameChannel({ id: channel.id, name });
 
-  const title = type === 'adding' ? 'Добавить канал' : 'Переименовать канал';
+  const title = type === 'adding' ? t('chat_page.add_header') : t('chat_page.rename_header');
   const handler = type === 'adding' ? onAdd : onRename;
 
   const formik = useFormik({
@@ -37,8 +41,8 @@ const ChannelForm = () => {
     },
     validationSchema: yup.object({
       name: yup.string()
-        .required('Обязательное поле')
-        .notOneOf(channelNames, 'Должно быть уникальным'),
+        .required(t('errors.validation_errors.required'))
+        .notOneOf(channelNames, t('errors.validation_errors.channel_unique')),
     }),
     onSubmit: ({ name }) => {
       handler(name);
@@ -68,8 +72,8 @@ const ChannelForm = () => {
               <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>
             ) : null}
             <div className="d-flex justify-content-end">
-              <Button onClick={closeModal} type="button" variant="secondary" className="me-2">Отменить</Button>
-              <Button type="submit">Отправить</Button>
+              <Button onClick={closeModal} type="button" variant="secondary" className="me-2">{t('chat_page.cancel')}</Button>
+              <Button type="submit">{t('chat_page.send')}</Button>
             </div>
           </div>
         </Form>
