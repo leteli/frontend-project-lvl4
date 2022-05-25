@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import {
   Col,
   Button,
@@ -12,6 +13,7 @@ import { ChannelButton, ChannelDropdownButton } from './ChannelButtons.jsx';
 
 const Channels = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const channels = useSelector(selectors.selectAll);
   const { currentChannelId } = useSelector((state) => state.channels);
   const showAddingModal = () => dispatch(actions.openModal({ type: 'adding', channel: null }));
@@ -19,7 +21,7 @@ const Channels = () => {
   return currentChannelId && (
     <Col xs={4} md={2} className="pt-5 px-0 border-end bg-light">
       <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
-        <span>Каналы</span>
+        <span>{t('chat_page.channels')}</span>
         <Button onClick={showAddingModal} variant="" className="p-0 text-primary btn-group-vertical">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-plus-square" viewBox="0 0 16 16">
             <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />

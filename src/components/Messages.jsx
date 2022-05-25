@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { Col } from 'react-bootstrap';
 
 import { selectors as messagesSelectors } from '../slices/messagesSlice.js';
@@ -8,8 +9,8 @@ import { selectors as channelsSelectors } from '../slices/channelsSlice.js';
 import MessageForm from './MessageForm.jsx';
 
 const Messages = () => {
+  const { t } = useTranslation();
   const messages = useSelector(messagesSelectors.selectAll);
-  console.log(messages);
   const { currentChannelId } = useSelector((state) => state.channels);
   const currentChannel = useSelector((state) => channelsSelectors
     .selectById(state, currentChannelId));
@@ -24,8 +25,7 @@ const Messages = () => {
             <b>{currentChannel.name}</b>
           </p>
           <span className="text-muted">
-            {currentMessages.length}
-            сообщений
+            {t('messages.count', { count: currentMessages.length })}
           </span>
         </div>
         <div id="messages-box" className="chat-messages overflow-auto px-5">

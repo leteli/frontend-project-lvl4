@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import { Formik, Form as FormikForm } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
@@ -22,6 +23,7 @@ const LoginForm = () => {
   const auth = useAuth();
   const history = useHistory();
   const inputRef = useRef();
+  const { t } = useTranslation();
 
   useEffect(() => inputRef.current.focus(), []);
 
@@ -41,9 +43,9 @@ const LoginForm = () => {
                 }}
                 validationSchema={yup.object({
                   username: yup.string()
-                    .required('Это обязательное поле'), // i18n
+                    .required(t('errors.validation_errors.required')),
                   password: yup.string()
-                    .required('Это обязательное поле'),
+                    .required(t('errors.validation_errors.required')),
                 })}
                 onSubmit={async (values) => {
                   setAuthFailed(false);
@@ -64,7 +66,7 @@ const LoginForm = () => {
                   isSubmitting,
                 }) => (
                   <FormikForm className="col-12 col-md-6 mt-3 mt-mb-0">
-                    <h1 className="text-center mb-4">Войти</h1>
+                    <h1 className="text-center mb-4">{t('login_page.header')}</h1>
                     <Form.Floating className="mb-3">
                       <Form.Control
                         ref={inputRef}
@@ -90,17 +92,17 @@ const LoginForm = () => {
                       />
                       <Form.Label htmlFor="password">Пароль</Form.Label>
                       {touched.password && errors.password ? <div className="invalid-tooltip">{errors.password}</div> : null}
-                      {authFailed ? <div className="invalid-tooltip">Неверное имя пользователя или пароль</div> : null}
+                      {authFailed ? <div className="invalid-tooltip">{t('errors.login_auth_error')}</div> : null}
                     </Form.Floating>
-                    <Button disabled={isSubmitting} variant="outline-primary" className="w-100" type="submit">Войти</Button>
+                    <Button disabled={isSubmitting} variant="outline-primary" className="w-100" type="submit">{t('login_page.login_button')}</Button>
                   </FormikForm>
                 )}
               </Formik>
             </Card.Body>
             <Card.Footer className="p-4">
               <div className="text-center">
-                <span className="me-2">Нет аккаунта?</span>
-                <a href="/signup">Регистрация</a>
+                <span className="me-2">{t('login_page.footer_text')}</span>
+                <a href="/signup">{t('login_page.footer_signup_link')}</a>
               </div>
             </Card.Footer>
           </Card>

@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import { Formik, Form as FormikForm } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
@@ -23,6 +24,8 @@ const SignupForm = () => {
   const [signupFailed, setSignupFailed] = useState(false);
   const auth = useAuth();
   const history = useHistory();
+  const { t } = useTranslation();
+
   useEffect(() => inputRef.current.focus(), []);
 
   return (
@@ -42,15 +45,15 @@ const SignupForm = () => {
                 }}
                 validationSchema={yup.object({
                   username: yup.string()
-                    .required('Обязательное поле')
-                    .min(3, 'От 3 до 20 символов')
-                    .max(20, 'От 3 до 20 символов'),
+                    .required(t('errors.validation_errors.required'))
+                    .min(3, t('errors.validation_errors.username_min_max'))
+                    .max(20, t('errors.validation_errors.username_min_max')),
                   password: yup.string()
-                    .required('Обязательное поле')
-                    .min(6, 'Не менее 6 символов'),
+                    .required(t('errors.validation_errors.required'))
+                    .min(6, t('errors.validation_errors.password_min')),
                   confirmPassword: yup.string()
-                    .required('Обязательное поле')
-                    .oneOf([yup.ref('password')], 'Пароли должны совпадать'),
+                    .required(t('errors.validation_errors.required'))
+                    .oneOf([yup.ref('password')], t('errors.validation_errors.password_match')),
                 })}
                 onSubmit={async (values) => {
                   setSignupFailed(false);
@@ -71,7 +74,7 @@ const SignupForm = () => {
                   isSubmitting,
                 }) => (
                   <FormikForm className="w-50">
-                    <h1 className="text-center mb-4">Регистрация</h1>
+                    <h1 className="text-center mb-4">{t('signup_page.header')}</h1>
                     <Form.Floating className="mb-3">
                       <Form.Control
                         ref={inputRef}
@@ -112,9 +115,9 @@ const SignupForm = () => {
                       />
                       <Form.Label htmlFor="confirmPassword">Подтвердите пароль</Form.Label>
                       {touched.confirmPassword && errors.confirmPassword ? <div className="error invalid-tooltip">{errors.confirmPassword}</div> : null}
-                      {signupFailed ? <div className="invalid-tooltip">Такой пользователь уже существует</div> : null}
+                      {signupFailed ? <div className="invalid-tooltip">{t('errors.signup_error')}</div> : null}
                     </Form.Floating>
-                    <Button disabled={isSubmitting} variant="outline-primary" className="w-100" type="submit">Зарегистрироваться</Button>
+                    <Button disabled={isSubmitting} variant="outline-primary" className="w-100" type="submit">{t('signup_page.signup_button')}</Button>
                   </FormikForm>
                 )}
               </Formik>
