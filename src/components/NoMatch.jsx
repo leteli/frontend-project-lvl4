@@ -1,16 +1,12 @@
 import React from 'react';
-import { useLocation } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
 const NoMatch = () => {
-  const location = useLocation();
+  const { t } = useTranslation();
   return (
-    <div>
-      <h3>
-        No match for
-        <code>
-          {location.pathname}
-        </code>
-      </h3>
+    <div className="text-center mt-4">
+      <h3>{t('no_match_page.header')}</h3>
+      <p><a href="/">{t('no_match_page.link')}</a></p>
     </div>
   );
 };
