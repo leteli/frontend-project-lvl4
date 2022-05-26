@@ -5,6 +5,8 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { AuthProvider } from '../contexts/auth.jsx';
 import ChatNavbar from './ChatNavbar.jsx';
@@ -34,6 +36,7 @@ const App = () => (
           </Route>
         </Switch>
       </div>
+      <ToastContainer />
     </Router>
   </AuthProvider>
 );
