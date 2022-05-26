@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
-import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import i18n from 'i18next';
@@ -58,9 +57,7 @@ const init = (socket) => {
 
   const rollbar = new Rollbar(rollbarConfig);
 
-  const root = ReactDOM.createRoot(document.getElementById('chat'));
-
-  root.render(
+  return (
     <RollbarProvider instance={rollbar}>
       <ErrorBoundary>
         <Provider store={store}>
@@ -73,7 +70,7 @@ const init = (socket) => {
           </socketContext.Provider>
         </Provider>
       </ErrorBoundary>
-    </RollbarProvider>,
+    </RollbarProvider>
   );
 };
 
