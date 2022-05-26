@@ -77,11 +77,11 @@ const LoginForm = () => {
                         isInvalid={authFailed || errors.username}
                         name="username"
                         id="username"
-                        placeholder="Ваш ник"
+                        placeholder={t('login_page.username')}
                         autoComplete="username"
                         {...getFieldProps('username')}
                       />
-                      <Form.Label htmlFor="username">Ваш ник</Form.Label>
+                      <Form.Label htmlFor="username">{t('login_page.username')}</Form.Label>
                       {touched.username && errors.username ? <div className="invalid-tooltip">{errors.username}</div> : null}
                     </Form.Floating>
                     <Form.Floating className="mb-4">
@@ -90,11 +90,11 @@ const LoginForm = () => {
                         name="password"
                         id="password"
                         type="password"
-                        placeholder="Пароль"
+                        placeholder={t('login_page.password')}
                         autoComplete="password"
                         {...getFieldProps('password')}
                       />
-                      <Form.Label htmlFor="password">Пароль</Form.Label>
+                      <Form.Label htmlFor="password">{t('login_page.password')}</Form.Label>
                       {touched.password && errors.password ? <div className="invalid-tooltip">{errors.password}</div> : null}
                       {authFailed ? <div className="invalid-tooltip">{t('errors.login_auth_error')}</div> : null}
                     </Form.Floating>

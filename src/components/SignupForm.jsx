@@ -85,11 +85,11 @@ const SignupForm = () => {
                         isInvalid={signupFailed || errors.username}
                         name="username"
                         id="username"
-                        placeholder="От 3 до 20 символов"
+                        placeholder={t('errors.validation_errors.username_min_max')}
                         autoComplete="username"
                         {...getFieldProps('username')}
                       />
-                      <Form.Label htmlFor="username">Имя пользователя</Form.Label>
+                      <Form.Label htmlFor="username">{t('signup_page.username')}</Form.Label>
                       {touched.username && errors.username ? <div className="invalid-tooltip">{errors.username}</div> : null}
                     </Form.Floating>
                     <Form.Floating className="mb-3">
@@ -98,11 +98,11 @@ const SignupForm = () => {
                         name="password"
                         id="password"
                         type="password"
-                        placeholder="Не менее 6 символов"
+                        placeholder={t('errors.validation_errors.password_min')}
                         autoComplete="new-password"
                         {...getFieldProps('password')}
                       />
-                      <Form.Label htmlFor="password">Пароль</Form.Label>
+                      <Form.Label htmlFor="password">{t('signup_page.password')}</Form.Label>
                       {touched.password && errors.password ? <div className="invalid-tooltip">{errors.password}</div> : null}
                     </Form.Floating>
                     <Form.Floating className="mb-4">
@@ -113,11 +113,11 @@ const SignupForm = () => {
                         name="confirmPassword"
                         id="confirmPassword"
                         type="password"
-                        placeholder="Пароли должны совпадать"
+                        placeholder={t('errors.validation_errors.required')}
                         autoComplete="new-password"
                         {...getFieldProps('confirmPassword')}
                       />
-                      <Form.Label htmlFor="confirmPassword">Подтвердите пароль</Form.Label>
+                      <Form.Label htmlFor="confirmPassword">{t('signup_page.confirm_password')}</Form.Label>
                       {touched.confirmPassword && errors.confirmPassword ? <div className="error invalid-tooltip">{errors.confirmPassword}</div> : null}
                       {signupFailed ? <div className="invalid-tooltip">{t('errors.signup_error')}</div> : null}
                     </Form.Floating>
