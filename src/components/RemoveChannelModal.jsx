@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Modal, Button } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 
 import { selectors, actions as channelActions } from '../slices/channelsSlice.js';
 import { actions as modalActions } from '../slices/modalsSlice.js';
@@ -21,7 +22,13 @@ const RemoveChannelModal = () => {
   console.log(channel);
 
   const onRemove = () => {
-    socketApi.removeChannel(channel);
+    toast.promise(
+      socketApi.removeChannel(channel),
+      {
+        success: t('chat_page.removed'),
+        error: t('errors.network_error'),
+      },
+    );
     dispatch(channelActions.setCurrentChannel(generalChannelId));
     closeModal();
   };

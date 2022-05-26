@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import {
   Modal,
@@ -27,10 +28,21 @@ const ChannelForm = () => {
 
   const { type, channel } = useSelector((state) => state.modals);
 
-  const onAdd = (name) => {
-    socketApi.addNewChannel({ removable: true, name });
-  };
-  const onRename = (name) => socketApi.renameChannel({ id: channel.id, name });
+  const onAdd = (name) => toast.promise(
+    socketApi.addNewChannel({ removable: true, name }),
+    {
+      success: t('chat_page.added'),
+      error: t('errors.network_error'),
+    },
+  );
+
+  const onRename = (name) => toast.promise(
+    socketApi.renameChannel({ id: channel.id, name }),
+    {
+      success: t('chat_page.renamed'),
+      error: t('errors.network_error'),
+    },
+  );
 
   const title = type === 'adding' ? t('chat_page.add_header') : t('chat_page.rename_header');
   const handler = type === 'adding' ? onAdd : onRename;

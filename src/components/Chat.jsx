@@ -4,11 +4,12 @@ import {
   Container,
   Row,
 } from 'react-bootstrap';
-
+import { toast } from 'react-toastify';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
+
 import { getAuthHeader } from '../contexts/auth.jsx';
 import routes from '../routes.js';
-
 import Channels from './Channels.jsx';
 import Messages from './Messages.jsx';
 import Modal from './Modal.jsx';
@@ -17,21 +18,21 @@ import { actions as messagesActions } from '../slices/messagesSlice.js';
 
 const Chat = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const { data } = await axios.get(routes.dataPath(), {
+      const { data } = await toast.promise(
+        axios.get(routes.dataPath(), {
           headers: getAuthHeader(),
-        });
-        batch(() => {
-          dispatch(channelsActions.addChannels(data.channels));
-          dispatch(channelsActions.setCurrentChannel(data.currentChannelId));
-          dispatch(messagesActions.addMessages(data.messages));
-        });
-      } catch (err) {
-        console.log(err.message);
-      }
+        }),
+        { error: t('errors.network_error') },
+      );
+      batch(() => {
+        dispatch(channelsActions.addChannels(data.channels));
+        dispatch(channelsActions.setCurrentChannel(data.currentChannelId));
+        dispatch(messagesActions.addMessages(data.messages));
+      });
     };
     fetchData();
   }, []);

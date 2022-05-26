@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Formik, Form as FormikForm } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 import {
   Container,
@@ -62,8 +63,11 @@ const SignupForm = () => {
                     auth.logIn(data);
                     history.push('/');
                   } catch (err) {
-                    setSignupFailed(true);
-                    console.log(err.message);
+                    if (err.response.status === 409) {
+                      setSignupFailed(true);
+                    } else {
+                      toast.error(t('errors.network_error'));
+                    }
                   }
                 }}
               >

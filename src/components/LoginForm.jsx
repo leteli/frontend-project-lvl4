@@ -13,6 +13,7 @@ import {
   Button,
   Form,
 } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 
 import routes from '../routes.js';
 import loginImage from '../../assets/login.jpg';
@@ -54,8 +55,11 @@ const LoginForm = () => {
                     auth.logIn(data);
                     history.push('/');
                   } catch (err) {
-                    setAuthFailed(true);
-                    console.log(err.message);
+                    if (err.response.status === 401) {
+                      setAuthFailed(true);
+                    } else {
+                      toast.error(t('errors.network_error'));
+                    }
                   }
                 }}
               >
