@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-filename-extension */
-import 'core-js/stable/index.js'; // зачем?
-import 'regenerator-runtime/runtime.js'; // зачем?
+import 'core-js/stable/index.js';
+import 'regenerator-runtime/runtime.js';
 
-import '../assets/application.scss'; // зачем?
+import '../assets/application.scss';
 import init from './init.js';
 
 init();
