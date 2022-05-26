@@ -23,3 +23,8 @@ publish:
 
 deploy:
 	git push heroku main
+
+test:
+	npm test -s
+
+.PHONY: test
