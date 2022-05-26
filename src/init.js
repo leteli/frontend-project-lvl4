@@ -6,8 +6,10 @@ import { configureStore } from '@reduxjs/toolkit';
 import { io } from 'socket.io-client';
 import i18n from 'i18next';
 import { initReactI18next, I18nextProvider } from 'react-i18next';
-
+import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
+import Rollbar from 'rollbar';
 import { socketContext, buildSocketApi } from './contexts/sockets.js';
+import { AuthProvider } from './contexts/auth.jsx';
 import App from './components/App.jsx';
 import ru from '../assets/ru.js';
 
@@ -51,17 +53,29 @@ const init = () => {
       resources: { ru },
       lng: 'ru',
     });
+  const rollbarConfig = {
+    accessToken: '065c1b25ed14425b814b46d7c92b4570',
+    environment: 'production',
+  };
+
+  const rollbar = new Rollbar(rollbarConfig);
 
   const root = ReactDOM.createRoot(document.getElementById('chat'));
 
   root.render(
-    <Provider store={store}>
-      <socketContext.Provider value={socketApi}>
-        <I18nextProvider i18n={i18n}>
-          <App />
-        </I18nextProvider>
-      </socketContext.Provider>
-    </Provider>,
+    <RollbarProvider instance={rollbar}>
+      <ErrorBoundary>
+        <Provider store={store}>
+          <socketContext.Provider value={socketApi}>
+            <I18nextProvider i18n={i18n}>
+              <AuthProvider>
+                <App />
+              </AuthProvider>
+            </I18nextProvider>
+          </socketContext.Provider>
+        </Provider>
+      </ErrorBoundary>
+    </RollbarProvider>,
   );
 };
 
