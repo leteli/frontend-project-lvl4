@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Col } from 'react-bootstrap';
+import filter from 'leo-profanity';
 
 import { selectors as messagesSelectors } from '../slices/messagesSlice.js';
 import { selectors as channelsSelectors } from '../slices/channelsSlice.js';
@@ -10,6 +11,10 @@ import MessageForm from './MessageForm.jsx';
 
 const Messages = () => {
   const { t } = useTranslation();
+  filter.clearList();
+  filter.add(filter.getDictionary('en'));
+  filter.add(filter.getDictionary('ru'));
+
   const messages = useSelector(messagesSelectors.selectAll);
   const { currentChannelId } = useSelector((state) => state.channels);
   const currentChannel = useSelector((state) => channelsSelectors
@@ -22,7 +27,7 @@ const Messages = () => {
         <div className="bg-light mb-4 p-3 shadow-sm small">
           <p className="m-0">
             <b># </b>
-            <b>{currentChannel.name}</b>
+            <b>{filter.clean(currentChannel.name)}</b>
           </p>
           <span className="text-muted">
             {t('messages.count', { count: currentMessages.length })}
@@ -33,7 +38,7 @@ const Messages = () => {
             <div key={message.id} className="text-break mb-2">
               <b>{message.username}</b>
               <span> : </span>
-              {message.body}
+              {filter.clean(message.body)}
             </div>
           ))}
         </div>
