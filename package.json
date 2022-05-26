@@ -2,7 +2,7 @@
     "name": "@hexlet/code",
     "version": "0.0.1",
     "description": "Chat",
-    "main": "src/init.js",
+    "main": "src/index.js",
     "type": "module",
     "scripts": {
         "test": "NODE_OPTIONS=--experimental-vm-modules npx jest",
