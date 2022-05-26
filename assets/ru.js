@@ -10,6 +10,7 @@ export default {
       },
       login_auth_error: 'Неверное имя пользователя или пароль',
       signup_error: 'Такой пользователь уже существует',
+      network_error: 'Ошибка сети',
     },
     navbar: {
       header: 'Hexlet Chat',
@@ -28,11 +29,14 @@ export default {
     chat_page: {
       channels: 'Каналы',
       remove: 'Удалить',
+      removed: 'Канал удален',
       remove_header: 'Удалить канал',
       remove_confirm: 'Уверены?',
       rename: 'Переименовать',
+      renamed: 'Канал переименован',
       rename_header: 'Переименовать канал',
       add_header: 'Добавить канал',
+      added: 'Канал создан',
       cancel: 'Отменить',
       send: 'Отправить',
     },
