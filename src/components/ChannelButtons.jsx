@@ -8,9 +8,6 @@ import { actions as channelsActions } from '../slices/channelsSlice.js';
 import { actions as modalsActions } from '../slices/modalsSlice.js';
 
 export const ChannelButton = ({ channel }) => {
-  filter.clearList();
-  filter.add(filter.getDictionary('en'));
-  filter.add(filter.getDictionary('ru'));
   const dispatch = useDispatch();
   const { currentChannelId } = useSelector((state) => state.channels);
   const handleChannelClick = (id) => () => dispatch(channelsActions.setCurrentChannel(id));
