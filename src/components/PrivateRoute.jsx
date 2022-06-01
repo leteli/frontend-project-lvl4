@@ -2,6 +2,7 @@
 /* eslint-disable no-confusing-arrow */
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import routes from '../routes.js';
 
 const PrivateRoute = ({ children, ...rest }) => {
   const tokenInfo = localStorage.getItem('userId');
@@ -13,7 +14,7 @@ const PrivateRoute = ({ children, ...rest }) => {
       ) : (
         <Redirect
           to={{
-            pathname: '/login',
+            pathname: routes.login,
             state: { from: location },
           }}
         />

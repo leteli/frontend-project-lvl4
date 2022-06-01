@@ -14,22 +14,23 @@ import SignupForm from './SignupForm.jsx';
 import NoMatch from './NoMatch.jsx';
 import Chat from './Chat.jsx';
 import PrivateRoute from './PrivateRoute.jsx';
+import routes from '../routes.js';
 
 const App = () => (
   <Router>
     <div className="d-flex flex-column h-100">
       <ChatNavbar />
       <Switch>
-        <Route path="/login">
+        <Route path={routes.login}>
           <LoginForm />
         </Route>
-        <Route path="/signup">
+        <Route path={routes.signup}>
           <SignupForm />
         </Route>
-        <PrivateRoute exact path="/">
+        <PrivateRoute exact path={routes.root}>
           <Chat />
         </PrivateRoute>
-        <Route path="*">
+        <Route path={routes.any}>
           <NoMatch />
         </Route>
       </Switch>
