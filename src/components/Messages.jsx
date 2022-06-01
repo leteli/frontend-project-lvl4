@@ -11,10 +11,6 @@ import MessageForm from './MessageForm.jsx';
 
 const Messages = () => {
   const { t } = useTranslation();
-  filter.clearList();
-  filter.add(filter.getDictionary('en'));
-  filter.add(filter.getDictionary('ru'));
-
   const messages = useSelector(messagesSelectors.selectAll);
   const { currentChannelId } = useSelector((state) => state.channels);
   const currentChannel = useSelector((state) => channelsSelectors
