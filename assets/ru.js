@@ -37,6 +37,7 @@ export default {
     },
     chat_page: {
       channels: 'Каналы',
+      channel_name: 'Имя канала',
       remove: 'Удалить',
       removed: 'Канал удален',
       remove_header: 'Удалить канал',
@@ -50,6 +51,9 @@ export default {
       send: 'Отправить',
     },
     messages: {
+      new_message: 'Новое сообщение',
+      enter: 'Введите сообщение...',
+      send: 'Отправить',
       count_one: '{{count}} сообщение',
       count_few: '{{count}} сообщения',
       count_many: '{{count}} сообщений',
