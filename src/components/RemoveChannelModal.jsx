@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -6,10 +7,10 @@ import { toast } from 'react-toastify';
 
 import { selectors, actions as channelActions } from '../slices/channelsSlice.js';
 import { actions as modalActions } from '../slices/modalsSlice.js';
-import useSocket from '../contexts/sockets.js';
+import useSocket from '../contexts/useSocket.js';
 
 const RemoveChannelModal = () => {
-  const socketApi = useSocket();
+  const chatApi = useSocket();
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -23,7 +24,7 @@ const RemoveChannelModal = () => {
 
   const onRemove = () => {
     toast.promise(
-      socketApi.removeChannel(channel),
+      chatApi.removeChannel(channel),
       {
         success: t('chat_page.removed'),
         error: t('errors.network_error'),

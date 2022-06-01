@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import React, { useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -12,10 +13,10 @@ import * as yup from 'yup';
 
 import { selectors } from '../slices/channelsSlice.js';
 import { actions as modalsActions } from '../slices/modalsSlice.js';
-import useSocket from '../contexts/sockets.js';
+import useSocket from '../contexts/useSocket.js';
 
 const ChannelForm = () => {
-  const socketApi = useSocket();
+  const chatApi = useSocket();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const inputRef = useRef();
@@ -29,7 +30,7 @@ const ChannelForm = () => {
   const { type, channel } = useSelector((state) => state.modals);
 
   const onAdd = (name) => toast.promise(
-    socketApi.addNewChannel({ removable: true, name }),
+    chatApi.addNewChannel({ removable: true, name }),
     {
       success: t('chat_page.added'),
       error: t('errors.network_error'),
@@ -37,7 +38,7 @@ const ChannelForm = () => {
   );
 
   const onRename = (name) => toast.promise(
-    socketApi.renameChannel({ id: channel.id, name }),
+    chatApi.renameChannel({ id: channel.id, name }),
     {
       success: t('chat_page.renamed'),
       error: t('errors.network_error'),
@@ -79,7 +80,7 @@ const ChannelForm = () => {
               id="name"
               value={formik.values.name}
             />
-            <Form.Label className="visually-hidden" htmlFor="name">Имя канала</Form.Label>
+            <Form.Label className="visually-hidden" htmlFor="name">{t('chat_page.channel_name')}</Form.Label>
             {formik.touched.name && formik.errors.name ? (
               <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>
             ) : null}

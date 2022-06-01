@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router';
@@ -17,7 +18,7 @@ import { toast } from 'react-toastify';
 
 import routes from '../routes.js';
 import loginImage from '../../assets/login.jpg';
-import useAuth from '../contexts/auth.jsx';
+import useAuth from '../contexts/useAuth.js';
 
 const LoginForm = () => {
   const [authFailed, setAuthFailed] = useState(false);

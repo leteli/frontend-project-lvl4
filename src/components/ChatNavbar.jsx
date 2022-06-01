@@ -1,9 +1,10 @@
+/* eslint-disable import/no-cycle */
 import React from 'react';
 import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { Container, Navbar, Button } from 'react-bootstrap';
 
-import useAuth from '../contexts/auth.jsx';
+import useAuth from '../contexts/useAuth.js';
 
 const ChatNavbar = () => {
   const auth = useAuth();

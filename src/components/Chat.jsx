@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import React, { useEffect } from 'react';
 import { batch, useDispatch, useSelector } from 'react-redux';
 import {
@@ -8,7 +9,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 
-import { getAuthHeader } from '../contexts/auth.jsx';
+import getAuthHeader from '../contexts/getAuthHeader.js';
 import routes from '../routes.js';
 import Channels from './Channels.jsx';
 import Messages from './Messages.jsx';
