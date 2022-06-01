@@ -6,8 +6,10 @@ import i18n from 'i18next';
 import { initReactI18next, I18nextProvider } from 'react-i18next';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import Rollbar from 'rollbar';
-import { socketContext, buildSocketApi } from './contexts/sockets.js';
-import { AuthProvider } from './contexts/auth.jsx';
+import filter from 'leo-profanity';
+
+import buildChatApi from './contexts/buildChatApi.js';
+import AuthProvider from './components/AuthProvider.jsx';
 import App from './components/App.jsx';
 import ru from '../assets/ru.js';
 
@@ -15,7 +17,7 @@ import channelsReducer, { actions as channelsActions } from './slices/channelsSl
 import messagesReducer, { actions as messagesActions } from './slices/messagesSlice.js';
 import modalsReducer from './slices/modalsSlice.js';
 
-const init = (socket) => {
+const init = (socket, socketContext) => {
   const store = configureStore({
     reducer: {
       channels: channelsReducer,
@@ -24,7 +26,7 @@ const init = (socket) => {
     },
   });
 
-  const socketApi = buildSocketApi(socket);
+  const chatApi = buildChatApi(socket);
 
   socket.on('newMessage', (response) => {
     store.dispatch(messagesActions.addMessage(response));
@@ -50,8 +52,13 @@ const init = (socket) => {
       resources: { ru },
       lng: 'ru',
     });
+
+  filter.clearList();
+  filter.add(filter.getDictionary('en'));
+  filter.add(filter.getDictionary('ru'));
+
   const rollbarConfig = {
-    accessToken: '065c1b25ed14425b814b46d7c92b4570',
+    accessToken: process.env.ROLLBAR_TOKEN,
     environment: 'production',
   };
 
@@ -61,7 +68,7 @@ const init = (socket) => {
     <RollbarProvider instance={rollbar}>
       <ErrorBoundary>
         <Provider store={store}>
-          <socketContext.Provider value={socketApi}>
+          <socketContext.Provider value={chatApi}>
             <I18nextProvider i18n={i18n}>
               <AuthProvider>
                 <App />
