@@ -1,4 +1,4 @@
-install: install-deps --legacy-peer-deps
+install: install-deps
 
 start:
 	heroku local -f Procfile.dev
@@ -10,7 +10,7 @@ start-frontend:
 	npx webpack serve
 
 install-deps:
-	npm ci
+	npm ci --legacy-peer-deps
 
 build:
 	npm run build
