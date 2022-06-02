@@ -1,4 +1,4 @@
-install: install-deps
+install: install-deps --legacy-peer-deps
 
 start:
 	heroku local -f Procfile.dev
