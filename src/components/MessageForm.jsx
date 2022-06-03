@@ -46,8 +46,8 @@ const MessageForm = () => {
                 name="body"
                 type="text"
                 className="form-control border-0 p-0 ps-2"
-                placeholder={t('messages.new_message')}
-                aria-label={t('messages.enter')}
+                placeholder={t('messages.enter')}
+                aria-label={t('messages.new_message')}
                 // eslint-disable-next-line react/jsx-props-no-spreading
                 {...formik.getFieldProps('body')}
               />
