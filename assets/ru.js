@@ -36,10 +36,12 @@ export default {
       signup_button: 'Зарегистрироваться',
     },
     chat_page: {
+      plus: '+',
       channels: 'Каналы',
       channel_name: 'Имя канала',
+      handle_channel: 'Управление каналом',
       remove: 'Удалить',
-      removed: 'Канал удален',
+      removed: 'Канал удалён',
       remove_header: 'Удалить канал',
       remove_confirm: 'Уверены?',
       rename: 'Переименовать',

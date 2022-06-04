@@ -35,7 +35,9 @@ export const ChannelDropdownButton = ({ channel }) => {
         split
         variant={channel.id === currentChannelId ? 'secondary' : ''}
         className="flex-grow-0"
-      />
+      >
+        <span className="visually-hidden">{t('chat_page.handle_channel')}</span>
+      </Dropdown.Toggle>
       <Dropdown.Menu>
         <Dropdown.Item role="button" onClick={showModal('remove')} href="#">{t('chat_page.remove')}</Dropdown.Item>
         <Dropdown.Item role="button" onClick={showModal('rename')} href="#">{t('chat_page.rename')}</Dropdown.Item>
