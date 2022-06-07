@@ -9,6 +9,7 @@ import { initReactI18next, I18nextProvider } from 'react-i18next';
 // import Rollbar from 'rollbar';
 import filter from 'leo-profanity';
 
+import { socketContext } from './index.js';
 import buildChatApi from './contexts/buildChatApi.js';
 import AuthProvider from './components/AuthProvider.jsx';
 import App from './components/App.jsx';
@@ -18,7 +19,7 @@ import channelsReducer, { actions as channelsActions } from './slices/channelsSl
 import messagesReducer, { actions as messagesActions } from './slices/messagesSlice.js';
 import modalsReducer from './slices/modalsSlice.js';
 
-const init = (socket, socketContext) => {
+const init = (socket) => {
   const store = configureStore({
     reducer: {
       channels: channelsReducer,

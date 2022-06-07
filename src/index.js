@@ -14,7 +14,7 @@ const socket = io();
 export const socketContext = createContext();
 export const authContext = createContext();
 
-const vdom = init(socket, socketContext, authContext);
+const vdom = init(socket);
 
 const root = ReactDOM.createRoot(document.getElementById('chat'));
 
