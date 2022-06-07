@@ -1,6 +1,11 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState, useEffect, useRef } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useContext,
+} from 'react';
 import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { Formik, Form as FormikForm } from 'formik';
@@ -19,12 +24,12 @@ import {
 
 import routes from '../routes.js';
 import signupImage from '../../assets/signup.jpg';
-import useAuth from '../contexts/useAuth.js';
+import { authContext } from '../index.js';
 
 const SignupForm = () => {
   const inputRef = useRef();
   const [signupFailed, setSignupFailed] = useState(false);
-  const auth = useAuth();
+  const auth = useContext(authContext);
   const history = useHistory();
   const { t } = useTranslation();
 

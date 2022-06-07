@@ -1,6 +1,11 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState, useEffect, useRef } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useContext,
+} from 'react';
 import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { Formik, Form as FormikForm } from 'formik';
@@ -18,11 +23,11 @@ import { toast } from 'react-toastify';
 
 import routes from '../routes.js';
 import loginImage from '../../assets/login.jpg';
-import useAuth from '../contexts/useAuth.js';
+import { authContext } from '../index.js';
 
 const LoginForm = () => {
   const [authFailed, setAuthFailed] = useState(false);
-  const auth = useAuth();
+  const auth = useContext(authContext);
   const history = useHistory();
   const inputRef = useRef();
   const { t } = useTranslation();
