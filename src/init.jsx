@@ -57,16 +57,17 @@ const init = (socket, socketContext) => {
   filter.add(filter.getDictionary('en'));
   filter.add(filter.getDictionary('ru'));
 
-  // const rollbarConfig = {
-  //  accessToken: process.env.ROLLBAR_TOKEN,
-  //  environment: 'production',
-  // };
+  const rollbarConfig = {
+    accessToken: process.env.ROLLBAR_TOKEN,
+    environment: 'production',
+  };
 
-  // const rollbar = new Rollbar(rollbarConfig);
+  const rollbar = new Rollbar(rollbarConfig);
   // <RollbarProvider instance={rollbar}><ErrorBoundary></ErrorBoundary></RollbarProvider> СНАРУЖИ!
 
   return (
-        // eslint-disable-next-line react/jsx-indent
+    <RollbarProvider instance={rollbar}>
+      <ErrorBoundary>
         <Provider store={store}>
           <socketContext.Provider value={chatApi}>
             <I18nextProvider i18n={i18n}>
@@ -76,6 +77,8 @@ const init = (socket, socketContext) => {
             </I18nextProvider>
           </socketContext.Provider>
         </Provider>
+      </ErrorBoundary>
+    </RollbarProvider>
   );
 };
 
