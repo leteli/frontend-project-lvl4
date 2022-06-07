@@ -4,8 +4,8 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import i18n from 'i18next';
 import { initReactI18next, I18nextProvider } from 'react-i18next';
-import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
-import Rollbar from 'rollbar';
+// import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
+// import Rollbar from 'rollbar';
 import filter from 'leo-profanity';
 
 import buildChatApi from './contexts/buildChatApi.js';
@@ -57,28 +57,24 @@ const init = (socket, socketContext) => {
   filter.add(filter.getDictionary('en'));
   filter.add(filter.getDictionary('ru'));
 
-  const rollbarConfig = {
-    accessToken: process.env.ROLLBAR_TOKEN,
-    environment: 'production',
-  };
+  // const rollbarConfig = {
+  //  accessToken: process.env.ROLLBAR_TOKEN,
+  //  environment: 'production',
+  // };
 
-  const rollbar = new Rollbar(rollbarConfig);
-  // <RollbarProvider instance={rollbar}><ErrorBoundary></ErrorBoundary></RollbarProvider> СНАРУЖИ!
+  // const rollbar = new Rollbar(rollbarConfig);
+  // <RollbarProvider instance={rollbar}><ErrorBoundary></ErrorBoundary></RollbarProvider>
 
   return (
-    <RollbarProvider instance={rollbar}>
-      <ErrorBoundary>
-        <Provider store={store}>
-          <socketContext.Provider value={chatApi}>
-            <I18nextProvider i18n={i18n}>
-              <AuthProvider>
-                <App />
-              </AuthProvider>
-            </I18nextProvider>
-          </socketContext.Provider>
-        </Provider>
-      </ErrorBoundary>
-    </RollbarProvider>
+    <Provider store={store}>
+      <socketContext.Provider value={chatApi}>
+        <I18nextProvider i18n={i18n}>
+          <AuthProvider>
+            <App />
+          </AuthProvider>
+        </I18nextProvider>
+      </socketContext.Provider>
+    </Provider>
   );
 };
 
