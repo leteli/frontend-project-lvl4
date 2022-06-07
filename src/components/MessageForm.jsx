@@ -1,17 +1,17 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable no-param-reassign */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 
-import useSocket from '../contexts/useSocket.js';
+import { socketContext } from '../index.js';
 
 const MessageForm = () => {
-  const chatApi = useSocket();
+  const chatApi = useContext(socketContext);
   const { t } = useTranslation();
   const inputRef = useRef();
   useEffect(() => inputRef.current.focus());
@@ -27,10 +27,11 @@ const MessageForm = () => {
         onSubmit={(values, actions) => {
           const { username } = JSON.parse(localStorage.getItem('userId'));
           const message = { ...values, channelId, username };
-          toast.promise(
-            chatApi.sendNewMessage(message),
-            { error: t('errors.network_error') },
-          );
+          try {
+            chatApi.sendNewMessage(message);
+          } catch (err) {
+            toast.error(t('errors.network_error'));
+          }
           values.body = '';
           actions.setSubmitting(false);
         }}

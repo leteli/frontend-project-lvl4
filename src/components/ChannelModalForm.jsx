@@ -1,5 +1,5 @@
 /* eslint-disable import/no-cycle */
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
@@ -13,10 +13,10 @@ import * as yup from 'yup';
 
 import { selectors } from '../slices/channelsSlice.js';
 import { actions as modalsActions } from '../slices/modalsSlice.js';
-import useSocket from '../contexts/useSocket.js';
+import { socketContext } from '../index.js';
 
 const ChannelForm = () => {
-  const chatApi = useSocket();
+  const chatApi = useContext(socketContext);
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const inputRef = useRef();
@@ -29,21 +29,23 @@ const ChannelForm = () => {
 
   const { type, channel } = useSelector((state) => state.modals);
 
-  const onAdd = (name) => toast.promise(
-    chatApi.addNewChannel({ removable: true, name }),
-    {
-      success: t('chat_page.added'),
-      error: t('errors.network_error'),
-    },
-  );
+  const onAdd = (name) => {
+    try {
+      chatApi.addNewChannel({ removable: true, name });
+      toast.success(t('chat_page.added'));
+    } catch (err) {
+      toast.error(t('errors.network_error'));
+    }
+  };
 
-  const onRename = (name) => toast.promise(
-    chatApi.renameChannel({ id: channel.id, name }),
-    {
-      success: t('chat_page.renamed'),
-      error: t('errors.network_error'),
-    },
-  );
+  const onRename = (name) => {
+    try {
+      chatApi.renameChannel({ id: channel.id, name });
+      toast.success(t('chat_page.renamed'));
+    } catch (err) {
+      toast.error(t('errors.network_error'));
+    }
+  };
 
   const title = type === 'adding' ? t('chat_page.add_header') : t('chat_page.rename_header');
   const handler = type === 'adding' ? onAdd : onRename;
