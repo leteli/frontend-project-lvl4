@@ -1,5 +1,5 @@
 /* eslint-disable import/no-cycle */
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { batch, useDispatch, useSelector } from 'react-redux';
 import {
   Container,
@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 
-import getAuthHeader from '../contexts/getAuthHeader.js';
+import { authContext } from '../index.js';
 import routes from '../routes.js';
 import Channels from './Channels.jsx';
 import Messages from './Messages.jsx';
@@ -20,20 +20,22 @@ import { actions as messagesActions } from '../slices/messagesSlice.js';
 const Chat = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const auth = useContext(authContext);
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await toast.promise(
-        axios.get(routes.dataPath(), {
-          headers: getAuthHeader(),
-        }),
-        { error: t('errors.network_error') },
-      );
-      batch(() => {
-        dispatch(channelsActions.addChannels(data.channels));
-        dispatch(channelsActions.setCurrentChannel(data.currentChannelId));
-        dispatch(messagesActions.addMessages(data.messages));
-      });
+      try {
+        const { data } = await axios.get(routes.dataPath(), {
+          headers: auth.getAuthHeader(),
+        });
+        batch(() => {
+          dispatch(channelsActions.addChannels(data.channels));
+          dispatch(channelsActions.setCurrentChannel(data.currentChannelId));
+          dispatch(messagesActions.addMessages(data.messages));
+        });
+      } catch (err) {
+        toast.error(t('errors.network_error'));
+      }
     };
     fetchData();
   }, []);
