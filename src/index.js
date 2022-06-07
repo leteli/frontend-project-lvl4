@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable react/jsx-filename-extension */
 import { createContext } from 'react';
 import ReactDOM from 'react-dom/client';

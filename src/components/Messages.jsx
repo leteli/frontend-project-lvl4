@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
 import { useSelector } from 'react-redux';
