@@ -13,10 +13,9 @@ import * as yup from 'yup';
 
 import { selectors } from '../slices/channelsSlice.js';
 import { actions as modalsActions } from '../slices/modalsSlice.js';
-import { getSocketContext } from '../contexts/getContexts.js';
+import { socketContext } from '../index.js';
 
 const ChannelForm = () => {
-  const socketContext = getSocketContext();
   const chatApi = useContext(socketContext);
   const dispatch = useDispatch();
   const { t } = useTranslation();

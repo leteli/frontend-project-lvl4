@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -8,7 +9,7 @@ import { initReactI18next, I18nextProvider } from 'react-i18next';
 // import Rollbar from 'rollbar';
 import filter from 'leo-profanity';
 
-import { getSocketContext } from './contexts/getContexts.js';
+import { socketContext } from './index.js';
 import buildChatApi from './contexts/buildChatApi.js';
 import AuthProvider from './components/AuthProvider.jsx';
 import App from './components/App.jsx';
@@ -28,7 +29,6 @@ const init = (socket) => {
   });
 
   const chatApi = buildChatApi(socket);
-  const socketContext = getSocketContext();
 
   socket.on('newMessage', (response) => {
     store.dispatch(messagesActions.addMessage(response));

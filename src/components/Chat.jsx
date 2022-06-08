@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import React, { useEffect, useContext } from 'react';
 import { batch, useDispatch, useSelector } from 'react-redux';
 import {
@@ -8,18 +9,17 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 
+import { authContext } from '../index.js';
 import routes from '../routes.js';
 import Channels from './Channels.jsx';
 import Messages from './Messages.jsx';
 import Modal from './Modal.jsx';
 import { actions as channelsActions } from '../slices/channelsSlice.js';
 import { actions as messagesActions } from '../slices/messagesSlice.js';
-import { getAuthContext } from '../contexts/getContexts.js';
 
 const Chat = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const authContext = getAuthContext();
   const auth = useContext(authContext);
 
   useEffect(() => {

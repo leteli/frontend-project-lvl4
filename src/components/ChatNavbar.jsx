@@ -1,12 +1,12 @@
+/* eslint-disable import/no-cycle */
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { Container, Navbar, Button } from 'react-bootstrap';
 
-import { getAuthContext } from '../contexts/getContexts.js';
+import { authContext } from '../index.js';
 
 const ChatNavbar = () => {
-  const authContext = getAuthContext();
   const auth = useContext(authContext);
   const history = useHistory();
   const { t } = useTranslation();
