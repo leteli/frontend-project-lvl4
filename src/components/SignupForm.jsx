@@ -1,4 +1,3 @@
-/* eslint-disable import/no-cycle */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, {
   useState,
@@ -24,11 +23,12 @@ import {
 
 import routes from '../routes.js';
 import signupImage from '../../assets/signup.jpg';
-import { authContext } from '../index.js';
+import { getAuthContext } from '../contexts/getContexts.js';
 
 const SignupForm = () => {
   const inputRef = useRef();
   const [signupFailed, setSignupFailed] = useState(false);
+  const authContext = getAuthContext();
   const auth = useContext(authContext);
   const history = useHistory();
   const { t } = useTranslation();
