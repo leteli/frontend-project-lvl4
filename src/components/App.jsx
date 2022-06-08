@@ -1,4 +1,3 @@
-/* eslint-disable import/no-cycle */
 /* eslint-disable no-confusing-arrow */
 import React from 'react';
 import {

@@ -1,4 +1,3 @@
-/* eslint-disable import/no-cycle */
 import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -7,7 +6,7 @@ import { toast } from 'react-toastify';
 
 import { selectors, actions as channelActions } from '../slices/channelsSlice.js';
 import { actions as modalActions } from '../slices/modalsSlice.js';
-import { socketContext } from '../index.js';
+import { socketContext } from '../contexts/getContexts.js';
 
 const RemoveChannelModal = () => {
   const chatApi = useContext(socketContext);

@@ -1,4 +1,3 @@
-/* eslint-disable import/no-cycle */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, {
   useState,
@@ -23,7 +22,7 @@ import { toast } from 'react-toastify';
 
 import routes from '../routes.js';
 import loginImage from '../../assets/login.jpg';
-import { authContext } from '../index.js';
+import { authContext } from '../contexts/getContexts.js';
 
 const LoginForm = () => {
   const [authFailed, setAuthFailed] = useState(false);

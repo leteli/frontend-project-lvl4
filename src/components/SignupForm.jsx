@@ -1,4 +1,3 @@
-/* eslint-disable import/no-cycle */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, {
   useState,
@@ -24,7 +23,7 @@ import {
 
 import routes from '../routes.js';
 import signupImage from '../../assets/signup.jpg';
-import { authContext } from '../index.js';
+import { authContext } from '../contexts/getContexts.js';
 
 const SignupForm = () => {
   const inputRef = useRef();

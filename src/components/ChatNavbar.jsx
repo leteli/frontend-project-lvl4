@@ -1,10 +1,9 @@
-/* eslint-disable import/no-cycle */
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { Container, Navbar, Button } from 'react-bootstrap';
 
-import { authContext } from '../index.js';
+import { authContext } from '../contexts/getContexts.js';
 
 const ChatNavbar = () => {
   const auth = useContext(authContext);

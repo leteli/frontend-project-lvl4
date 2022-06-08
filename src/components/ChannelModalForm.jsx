@@ -13,7 +13,7 @@ import * as yup from 'yup';
 
 import { selectors } from '../slices/channelsSlice.js';
 import { actions as modalsActions } from '../slices/modalsSlice.js';
-import { socketContext } from '../index.js';
+import { socketContext } from '../contexts/getContexts.js';
 
 const ChannelForm = () => {
   const chatApi = useContext(socketContext);

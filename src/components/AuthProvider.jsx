@@ -1,7 +1,6 @@
-/* eslint-disable import/no-cycle */
 import React from 'react';
+import { authContext } from '../contexts/getContexts.js';
 import useAuthProvider from '../contexts/useAuthProvider.js';
-import { authContext } from '../index.js';
 
 const AuthProvider = ({ children }) => {
   const auth = useAuthProvider();

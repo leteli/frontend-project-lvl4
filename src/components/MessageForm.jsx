@@ -1,4 +1,3 @@
-/* eslint-disable import/no-cycle */
 /* eslint-disable no-param-reassign */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useEffect, useRef, useContext } from 'react';
@@ -8,7 +7,7 @@ import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 
-import { socketContext } from '../index.js';
+import { socketContext } from '../contexts/getContexts.js';
 
 const MessageForm = () => {
   const chatApi = useContext(socketContext);
