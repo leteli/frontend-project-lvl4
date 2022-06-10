@@ -40,7 +40,7 @@ const LoginForm = () => {
           <Card className="shadow-sm my-3">
             <Card.Body className="row p-5">
               <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-                <img src={loginImage} className="rounded-circle" alt="Войти" />
+                <img src={loginImage} className="rounded-circle" alt={t('login_page.header')} />
               </div>
               <Formik
                 initialValues={{
@@ -58,7 +58,7 @@ const LoginForm = () => {
                   try {
                     const { data } = await axios.post(routes.loginPath(), values);
                     auth.logIn(data);
-                    history.push('/');
+                    history.push(routes.root);
                   } catch (err) {
                     if (err.response.status === 401) {
                       setAuthFailed(true);
@@ -111,7 +111,7 @@ const LoginForm = () => {
             <Card.Footer className="p-4">
               <div className="text-center">
                 <span className="me-2">{t('login_page.footer_text')}</span>
-                <a href="/signup">{t('login_page.footer_signup_link')}</a>
+                <a href={routes.signup}>{t('login_page.footer_signup_link')}</a>
               </div>
             </Card.Footer>
           </Card>

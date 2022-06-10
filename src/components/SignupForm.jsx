@@ -41,7 +41,7 @@ const SignupForm = () => {
           <Card className="shadow-sm">
             <Card.Body className="d-flex flex-column flex-md-row p-5 justify-content-around align-items-center">
               <div>
-                <img src={signupImage} className="rounded-circle" alt="Регистрация" />
+                <img src={signupImage} className="rounded-circle" alt={t('signup_page.header')} />
               </div>
               <Formik
                 initialValues={{
@@ -66,7 +66,7 @@ const SignupForm = () => {
                   try {
                     const { data } = await axios.post(routes.signupPath(), values);
                     auth.logIn(data);
-                    history.push('/');
+                    history.push(routes.root);
                   } catch (err) {
                     if (err.response.status === 409) {
                       setSignupFailed(true);
